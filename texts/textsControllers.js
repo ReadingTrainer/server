@@ -13,11 +13,11 @@ exports.getAllTexts = async (req, res) => {
 };
 
 exports.getOneText = async (req, res) => {
-  const { id } = req.params;  
+  const { id } = req.params;
   try {
-    const texts = await textModel.findTextById(id);
+    const text = await textModel.findTextById(id);
     res.status(200).json({
-      texts
+      text
     });
   } catch (error) {
     res.status(500).json({ error });
@@ -45,7 +45,7 @@ exports.deleteText = async (req, res) => {
     if (deleteText) {
       res.status(200).json(deleteText);
     } else {
-      res.status(400).json({ message: 'invalid Id ' });
+      res.status(400).json({ message: "invalid Id " });
     }
   } catch (error) {
     res.status(500).json({ errorMessage: `request could'nt process` });
