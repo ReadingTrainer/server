@@ -15,6 +15,9 @@ router.post(
   textsController.createText,
 );
 
-
+router.delete(
+  '/text/:id',
+  textsController.deleteText,
+);
 
 module.exports = router;
