@@ -17,7 +17,7 @@ exports.getOneText = async (req, res) => {
   try {
     const texts = await textModel.findTextById(id);
     res.status(200).json({
-      data: texts
+      texts
     });
   } catch (error) {
     res.status(500).json({ error });
