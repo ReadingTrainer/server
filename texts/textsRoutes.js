@@ -1,12 +1,12 @@
 const express = require('express');
-const textsController = require('./textsController');
+const textsController = require('./textsControllers');
 
 const router = express.Router();
 
-router.get('/', textsController.getAllTexts);
+router.get('/:id', textsController.getAllTexts);
 
 router.get(
-  '/:id',
+  '/text/:id',
   textsController.getOneText
 );
 

@@ -1,32 +1,22 @@
-const db = require('../data/dbConfig');
+const db = require("../data/dbConfig");
 
 function findTextById(id) {
-  return db('texts')
+  return db("texts")
     .where({ id })
     .first()
-    .select(
-      'name',
-      'text',
-    );
+    .select("name", "text");
 }
-
 
 function getTexts(userId) {
-  return db('workouts').where(function() {
-    this.where('user_id', userId).orWhere('user_id', null);
-  });
+  return db("texts").where("user_id", userId);
 }
 
-async function createText(text) {
-  const [text] = await db('workout-session').insert(
-    text,
-    '*',
-  );
-  return text;
+function createText(text) {
+  return db("texts").insert(text);
 }
 
 module.exports = {
   findTextById,
   getTexts,
-  createText,
+  createText
 };
