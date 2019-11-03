@@ -15,8 +15,13 @@ function createText(text) {
   return db("texts").insert(text);
 }
 
+const deleteTextById = (id) => {
+  return db('texts').where({ id }).del();
+};
+
 module.exports = {
   findTextById,
   getTexts,
-  createText
+  createText,
+  deleteTextById
 };
