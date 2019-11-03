@@ -36,3 +36,18 @@ exports.createText = async (req, res) => {
     });
   }
 };
+
+exports.deleteText = async (req, res) => {
+  const { id } = req.params;
+  const deleteText = await textModel.deleteTextById(id);
+
+  try {
+    if (deleteText) {
+      res.status(200).json(deleteText);
+    } else {
+      res.status(400).json({ message: 'invalid Id ' });
+    }
+  } catch (error) {
+    res.status(500).json({ errorMessage: `request could'nt process` });
+  }
+};
