@@ -51,3 +51,30 @@ exports.deleteText = async (req, res) => {
     res.status(500).json({ errorMessage: `request could'nt process` });
   }
 };
+
+exports.startWorkoutSession = async (req, res) => {
+  try {
+    const { userId } = req;
+    const { id } = req.params;
+    const session = {
+      session_start: new Date().toISOString(),
+      text_id: id,
+      user_id: userId,
+    };
+    const startSession = await workoutModel.startTextSession(
+      session,
+    );
+    return res.status(200).json({
+      message: 'text session started',
+      data: {
+        sessionId: startSession.id,
+        userId: startSession.user_id,
+        start: startSession.session_start,
+      },
+    });
+  } catch (error) {
+    return res.status(500).json({
+      Error: error.message,
+    });
+  }
+};
