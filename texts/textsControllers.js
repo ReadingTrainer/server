@@ -54,23 +54,19 @@ exports.deleteText = async (req, res) => {
 
 exports.startTextSession = async (req, res) => {
   try {
-    const { userId } = req;
+    const { userId } = req.body;
     const { id } = req.params;
     const session = {
       session_start: new Date().toISOString(),
       text_id: id,
       user_id: userId,
     };
-    const startSession = await workoutModel.startTextSession(
+    const startSession = await textModel.startTextSession(
       session,
     );
     return res.status(200).json({
       message: 'text session started',
-      data: {
-        sessionId: startSession.id,
-        userId: startSession.user_id,
-        start: startSession.session_start,
-      },
+      sessionId: startSession,
     });
   } catch (error) {
     return res.status(500).json({
@@ -82,9 +78,9 @@ exports.startTextSession = async (req, res) => {
 exports.endTextSession = async (req, res) => {
   try {
     const sessionEnd = new Date().toISOString();
-    const { id } = req.session;
-    const endSession = await workoutModel.endTextSession(
-      id,
+    const { session_id } = req.body;
+    const endSession = await textModel.endTextSession(
+      session_id,
       sessionEnd,
     );
     return endSession
@@ -94,6 +90,27 @@ exports.endTextSession = async (req, res) => {
       : res.status(500).json({
           error: 'Something went wrong, Please Try Again',
         });
+  } catch (error) {
+    return res.status(500).json({
+      Error: error.message,
+    });
+  }
+};
+
+exports.getTextHistory = async (req, res) => {
+  try {
+    let { days } = req.query;
+    // if days provided is not valid, discard it.
+    days = !Number.isNaN(Number(days)) ? days : undefined;
+    const { id } = req.params;
+    const textHistory = await textModel.getTextHistory(
+      id,
+      days,
+    );
+    return res.status(200).json({
+      message: 'Text History Retrieved Succesfully',
+      textHistory,
+    });
   } catch (error) {
     return res.status(500).json({
       Error: error.message,

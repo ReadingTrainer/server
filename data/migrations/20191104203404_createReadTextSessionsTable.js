@@ -1,15 +1,11 @@
 exports.up = function(knex) {
-  return knex.schema.createTable("textSession", session => {
+  return knex.schema.createTable("text-session", session => {
     session.increments();
     session.timestamp("session_start");
     session.timestamp("session_end");
     session
       .integer("text_id")
-      .unsigned()
-      .references("id")
-      .inTable("texts")
-      .onUpdate("CASCADE")
-      .onDelete("CASCADE");
+      .notNullable()
     session
       .integer("user_id")
       .unsigned()
@@ -23,5 +19,5 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-  return knex.schema.dropTableIfExists("textSession");
+  return knex.schema.dropTableIfExists("text-session");
 };
