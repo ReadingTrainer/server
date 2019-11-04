@@ -3,7 +3,7 @@ exports.up = function(knex) {
     texts.increments();
     texts.text("text", 500000).notNullable();
     texts.text("name").notNullable();
-    texts;
+    texts.text("date");
     texts
       .integer("user_id")
       .unsigned()
