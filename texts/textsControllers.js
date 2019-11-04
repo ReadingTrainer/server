@@ -52,7 +52,7 @@ exports.deleteText = async (req, res) => {
   }
 };
 
-exports.startWorkoutSession = async (req, res) => {
+exports.startTextSession = async (req, res) => {
   try {
     const { userId } = req;
     const { id } = req.params;
@@ -72,6 +72,28 @@ exports.startWorkoutSession = async (req, res) => {
         start: startSession.session_start,
       },
     });
+  } catch (error) {
+    return res.status(500).json({
+      Error: error.message,
+    });
+  }
+};
+
+exports.endTextSession = async (req, res) => {
+  try {
+    const sessionEnd = new Date().toISOString();
+    const { id } = req.session;
+    const endSession = await workoutModel.endTextSession(
+      id,
+      sessionEnd,
+    );
+    return endSession
+      ? res.status(200).json({
+          message: 'Text session ended',
+        })
+      : res.status(500).json({
+          error: 'Something went wrong, Please Try Again',
+        });
   } catch (error) {
     return res.status(500).json({
       Error: error.message,
