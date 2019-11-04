@@ -33,6 +33,7 @@ exports.signup = async (req, res) => {
         message: 'User created',
         token: generateToken(newUser.email, newUser.id),
         user: newUser,
+        username: credentials.username
       });
     }
   } catch (error) {
@@ -57,6 +58,7 @@ exports.login = async (req, res) => {
       return res.status(200).json({
         token: generateToken(user.email, user.id),
         userId: user.id,
+        username: user.username
       });
     }
     return res
