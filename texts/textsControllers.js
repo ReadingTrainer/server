@@ -54,12 +54,13 @@ exports.deleteText = async (req, res) => {
 
 exports.startTextSession = async (req, res) => {
   try {
-    const { userId } = req.body;
+    const { userId, wordsPerMinute } = req.body;
     const { id } = req.params;
     const session = {
       session_start: new Date().toISOString(),
       text_id: id,
       user_id: userId,
+      words_per_minute: wordsPerMinute
     };
     const startSession = await textModel.startTextSession(
       session,

@@ -44,21 +44,20 @@ function findTextSessionByUserId(userId) {
 }
 
 function getTextHistory(userId, dayLimit) {
-  // if dayLimit is provided, multiply the days by 86400000 milliseconds
-  // subtract the result from the current day's JS Date value
-  // parse the result to a Date value and convert toISOString()
-  // if dayLimit is not provided, use a predefined default limit.
-  const dateLimit =
-    (dayLimit
-      ? new Date(new Date() - dayLimit * 86400000).toISOString()
-      : false) || new Date(1567213780604).toISOString();
+  // // if dayLimit is provided, multiply the days by 86400000 milliseconds
+  // // subtract the result from the current day's JS Date value
+  // // parse the result to a Date value and convert toISOString()
+  // // if dayLimit is not provided, use a predefined default limit.
+  // const dateLimit =
+  //   (dayLimit
+  //     ? new Date(new Date() - dayLimit * 86400000).toISOString()
+  //     : false) || new Date(1567213780604).toISOString();
 
   return db('text-session')
     .where({
       user_id: userId,
     })
-    .where('session_start', '>=', dateLimit)
-    .select('id', 'session_start', 'session_end', 'text_id');
+    // .where('session_start', '>=', dateLimit);
 }
 
 module.exports = {

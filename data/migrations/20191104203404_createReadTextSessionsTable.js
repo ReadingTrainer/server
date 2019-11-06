@@ -4,6 +4,9 @@ exports.up = function(knex) {
     session.timestamp("session_start");
     session.timestamp("session_end");
     session
+      .integer("words_per_minute")
+      .notNullable()
+    session
       .integer("text_id")
       .notNullable()
     session
